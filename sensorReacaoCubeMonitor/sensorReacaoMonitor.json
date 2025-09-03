@@ -1,0 +1,221 @@
+[
+    {
+        "id": "f8b089830617ee18",
+        "type": "tab",
+        "label": "Jogo de Reação",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3c166728c5228455",
+        "type": "serial in",
+        "z": "f8b089830617ee18",
+        "name": "UART STM32",
+        "serial": "uart_port",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "ac23303bf61c6fd9"
+            ]
+        ]
+    },
+    {
+        "id": "ac23303bf61c6fd9",
+        "type": "function",
+        "z": "f8b089830617ee18",
+        "name": "Separar Mensagens",
+        "func": "// Coleta todas as linhas e gera mensagens separadas\nlet lines = msg.payload.split(/\\r?\\n/);\nlet outP1 = null;\nlet outP2 = null;\nlet outHigh = null;\nlet outWinner = null;\n\nfor (let line of lines) {\n    line = line.trim();\n    if (line.startsWith(\"Player1:\") || line.startsWith(\"Jogador1:\")) {\n        let val = parseInt(line.split(\" \")[1]);\n        flow.set(\"p1\", val);\n        outP1 = {topic: \"Player1\", payload: val};\n    } else if (line.startsWith(\"Player2:\") || line.startsWith(\"Jogador2:\")) {\n        let val = parseInt(line.split(\" \")[1]);\n        flow.set(\"p2\", val);\n        outP2 = {topic: \"Player2\", payload: val};\n    } else if (line.startsWith(\"HighScore:\")) {\n        let val = parseInt(line.split(\" \")[1]);\n        outHigh = {topic: \"HighScore\", payload: val};\n    } else if (line.startsWith(\"Vencedor:\") || line.includes(\"Empate\")) {\n        outWinner = {topic: \"Winner\", payload: \"check\"};\n    }\n}\n\n// Retorna mensagens para as saídas dedicadas\nreturn [outP1, outP2, outHigh, outWinner];",
+        "outputs": 4,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "ad279bf66e76c310"
+            ],
+            [
+                "0fb921812c7c59d7"
+            ],
+            [
+                "1fb2bbc0e1ac6fe1"
+            ],
+            [
+                "0cb551456a80b6ce"
+            ]
+        ]
+    },
+    {
+        "id": "ad279bf66e76c310",
+        "type": "ui_text",
+        "z": "f8b089830617ee18",
+        "group": "main_group",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "Tempo P1",
+        "label": "Player 1 (ms):",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 660,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "0fb921812c7c59d7",
+        "type": "ui_text",
+        "z": "f8b089830617ee18",
+        "group": "main_group",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "name": "Tempo P2",
+        "label": "Player 2 (ms):",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 660,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1fb2bbc0e1ac6fe1",
+        "type": "ui_text",
+        "z": "f8b089830617ee18",
+        "group": "main_group",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "HighScore",
+        "label": "High Score (ms):",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 660,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0cb551456a80b6ce",
+        "type": "function",
+        "z": "f8b089830617ee18",
+        "name": "Leds",
+        "func": "let p1 = flow.get(\"p1\") || 0;\nlet p2 = flow.get(\"p2\") || 0;\nif(msg.topic === \"Winner\"){\n    if(p1 && p2){\n        if(p1 < p2){\n            // Player 1 vence\n            return [{topic:\"LED_P1\", payload:1},{topic:\"LED_P2\", payload:0}];\n        } else if(p2 < p1){\n            // Player 2 vence\n            return [{topic:\"LED_P1\", payload:0},{topic:\"LED_P2\", payload:1}];\n        } else {\n            // Empate\n            return [{topic:\"LED_P1\", payload:2},{topic:\"LED_P2\", payload:2}];\n        }\n    }\n}\n// Reseta LEDs se o teste ainda não começou ou foi resetado\nreturn [{topic:\"LED_P1\", payload:0},{topic:\"LED_P2\", payload:0}];",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "5d8ae9d16353e4eb"
+            ],
+            [
+                "a904986943d2386f"
+            ]
+        ]
+    },
+    {
+        "id": "5d8ae9d16353e4eb",
+        "type": "ui_led",
+        "z": "f8b089830617ee18",
+        "order": 4,
+        "group": "main_group",
+        "width": 3,
+        "height": 1,
+        "label": "P1",
+        "labelPlacement": "left",
+        "colorForValue": [
+            {
+                "color": "#00ff00",
+                "value": 1,
+                "valueType": "num"
+            },
+            {
+                "color": "#ffff00",
+                "value": 2,
+                "valueType": "num"
+            },
+            {
+                "color": "#000000",
+                "value": 0,
+                "valueType": "num"
+            }
+        ],
+        "name": "LED P1",
+        "x": 660,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a904986943d2386f",
+        "type": "ui_led",
+        "z": "f8b089830617ee18",
+        "order": 5,
+        "group": "main_group",
+        "width": 3,
+        "height": 1,
+        "label": "P2",
+        "labelPlacement": "left",
+        "colorForValue": [
+            {
+                "color": "#00ff00",
+                "value": 1,
+                "valueType": "num"
+            },
+            {
+                "color": "#ffff00",
+                "value": 2,
+                "valueType": "num"
+            },
+            {
+                "color": "#000000",
+                "value": 0,
+                "valueType": "num"
+            }
+        ],
+        "name": "LED P2",
+        "x": 660,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "uart_port",
+        "type": "serial-port",
+        "name": "COM3:115200",
+        "serialport": "COM3",
+        "serialbaud": "115200",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": ""
+    },
+    {
+        "id": "main_group",
+        "type": "ui_group",
+        "name": "Jogo de Reação",
+        "tab": "main_tab",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "main_tab",
+        "type": "ui_tab",
+        "name": "Reação",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
