@@ -132,7 +132,7 @@
         "labelPlacement": "left",
         "colorForValue": [
             {
-                "color": "#00ff00",
+                "color": "#0000ff",
                 "value": 1,
                 "valueType": "num"
             },
@@ -164,7 +164,7 @@
         "labelPlacement": "left",
         "colorForValue": [
             {
-                "color": "#00ff00",
+                "color": "#0000ff",
                 "value": 1,
                 "valueType": "num"
             },
