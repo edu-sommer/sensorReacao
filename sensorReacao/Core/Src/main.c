@@ -39,8 +39,9 @@
 #define LED_PLAYER1_Pin GPIO_PIN_9
 #define LED_PLAYER1_GPIO_Port GPIOC
 
-#define LED_PLAYER2_Pin GPIO_PIN_8
-#define LED_PLAYER2_GPIO_Port GPIOB
+#define LED_PLAYER2_Pin GPIO_PIN_7
+#define LED_PLAYER2_GPIO_Port GPIOC
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -63,6 +64,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void Send_UART_Message(char *message);
 void StartReactionTest(void);
+void TrafficLight_Sequence(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -83,28 +85,45 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
   SystemClock_Config();
 
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
-
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   Send_UART_Message("Jogo Inicializado\r\n\n");
   /* USER CODE END 2 */
 
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
-      // Botão START inicia o jogo
-      if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
-      {
-          HAL_Delay(50);
-          while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
-          StartReactionTest();
-      }
+    /* USER CODE END WHILE */
+	  // Botão START inicia o jogo
+	        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
+	        {
+	            HAL_Delay(50);
+	            while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
+	            StartReactionTest();
+	        }
+    /* USER CODE BEGIN 3 */
   }
+  /* USER CODE END 3 */
 }
 
 /**
@@ -116,9 +135,14 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
+  /** Configure the main internal regulator output voltage
+  */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -134,6 +158,8 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -192,6 +218,11 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
         {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET); // LED central desliga
 
+            // Semáforo PWM
+            __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 0);
+            __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 0);
+            __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
+
             // Envie o tempo dos dois players
             sprintf(msg, "Player1: %lu ms\r\n", uwReactionTime_P1);
             Send_UART_Message(msg);
@@ -207,7 +238,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             else if (uwReactionTime_P2 < uwReactionTime_P1)
             {
                 Send_UART_Message("Vencedor: Player2\r\n");
-                HAL_GPIO_WritePin(GPIOB, LED_PLAYER2_Pin, GPIO_PIN_SET); // LED P2 liga
+                HAL_GPIO_WritePin(GPIOC, LED_PLAYER2_Pin, GPIO_PIN_SET); // LED P2 liga
             }
             else
             {
@@ -229,9 +260,35 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 }
 
 /* Função para enviar mensagem via UART */
-void Send_UART_Message(char *message)
+void Send_UART_Message(char *message) {
+	HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+}
+
+void TrafficLight_Sequence(void)
 {
-    HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+
+    uint32_t maxDuty = __HAL_TIM_GET_AUTORELOAD(&htim4); // deve ser 999
+
+    for (int ch = 1; ch <= 3; ch++)
+    {
+        for (uint32_t duty = 0; duty <= maxDuty; duty += 20) // passos de 20
+        {
+            if (ch == 1) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, duty);
+            if (ch == 2) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, duty);
+            if (ch == 3) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, duty);
+
+            HAL_Delay(30); // 50 steps × 30ms ≈ 1,5s
+        }
+        HAL_Delay(300); // pausa curta entre LEDs
+    }
+
+    // Garante que todos ficam no brilho máximo
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, maxDuty);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, maxDuty);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, maxDuty);
 }
 
 /* Inicia o teste de reação */
@@ -242,13 +299,16 @@ void StartReactionTest(void)
         ubTestInProgress = 1;
         Send_UART_Message("Inicio do Teste...\r\n");
 
-        // Reseta os LEDs de vencedor
+        // Reseta LEDs vencedores
         HAL_GPIO_WritePin(GPIOC, LED_PLAYER1_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOB, LED_PLAYER2_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOC, LED_PLAYER2_Pin, GPIO_PIN_RESET);
 
-        // Delay aleatório 1-6 s em ticks do TIM2 (0,1 ms/tick)
+        // Executa a sequência do semáforo (com PWM)
+        HAL_Delay(500);
+        TrafficLight_Sequence();
+
+        // Delay aleatório 1-6s
         uint32_t random_delay_ticks = (rand() % 50000) + 10000;
-
         __HAL_TIM_SET_COUNTER(&htim2, 0);
         __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, random_delay_ticks);
         HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
@@ -263,13 +323,27 @@ void StartReactionTest(void)
   */
 void Error_Handler(void)
 {
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
+  /* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

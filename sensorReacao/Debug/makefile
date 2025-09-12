@@ -60,8 +60,8 @@ all: main-build
 main-build: sensorReacao.elf secondary-outputs
 
 # Tool invocations
-sensorReacao.elf sensorReacao.map: $(OBJS) $(USER_OBJS) D:\DUDU\ SOMMER\Documentos\Aula\Micros\ 2\sensorReacao\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "sensorReacao.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\DUDU SOMMER\Documentos\Aula\Micros 2\sensorReacao\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sensorReacao.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+sensorReacao.elf sensorReacao.map: $(OBJS) $(USER_OBJS) D:\DUDU\ SOMMER\Code\sensorReacao\sensorReacao\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "sensorReacao.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\DUDU SOMMER\Code\sensorReacao\sensorReacao\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sensorReacao.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

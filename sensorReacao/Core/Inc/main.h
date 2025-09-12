@@ -69,20 +69,26 @@ void Error_Handler(void);
 #define PLAYER2_GPIO_Port GPIOA
 #define BOT_START_Pin GPIO_PIN_5
 #define BOT_START_GPIO_Port GPIOC
-#define PLAYER1_Pin GPIO_PIN_6
-#define PLAYER1_GPIO_Port GPIOC
+#define BOT_P2_Pin GPIO_PIN_6
+#define BOT_P2_GPIO_Port GPIOC
+#define LED_P2_Pin GPIO_PIN_7
+#define LED_P2_GPIO_Port GPIOC
 #define LED_SENSOR_Pin GPIO_PIN_8
 #define LED_SENSOR_GPIO_Port GPIOC
-#define LED_P1_Pin GPIO_PIN_9
-#define LED_P1_GPIO_Port GPIOC
+#define BOT_P2C9_Pin GPIO_PIN_9
+#define BOT_P2C9_GPIO_Port GPIOC
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
-#define LED_P2_Pin GPIO_PIN_8
-#define LED_P2_GPIO_Port GPIOB
+#define LED_S1_Pin GPIO_PIN_6
+#define LED_S1_GPIO_Port GPIOB
+#define LED_S2_Pin GPIO_PIN_7
+#define LED_S2_GPIO_Port GPIOB
+#define LED_S3_Pin GPIO_PIN_8
+#define LED_S3_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
