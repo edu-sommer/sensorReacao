@@ -52,19 +52,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile uint32_t uwTick_LED_On = 0;
-volatile uint32_t uwReactionTime_P1 = 0;
-volatile uint32_t uwReactionTime_P2 = 0;
-volatile uint32_t uwHighScore = 0xFFFFFFFF;
-volatile uint8_t ubTestInProgress = 0;
+volatile uint32_t TimerLED = 0;
+volatile uint32_t ReactionP1 = 0;
+volatile uint32_t ReactionP2 = 0;
+volatile uint32_t HighScore = 0xFFFFFFFF; // Inicia com o maior valor possível
+volatile uint8_t TestInProgress = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void Send_UART_Message(char *message);
-void StartReactionTest(void);
-void TrafficLight_Sequence(void);
+void SendUART(char *message);
+void StartTest(void);
+void ControleSmeaforo(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -106,7 +106,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  Send_UART_Message("Jogo Inicializado\r\n\n");
+  SendUART("Jogo Iniciado.\r\n\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,12 +115,12 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  // Botão START inicia o jogo
-	        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
-	        {
-	            HAL_Delay(50);
-	            while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
-	            StartReactionTest();
-	        }
+	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
+	  {
+		  HAL_Delay(50);
+	      while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
+	      StartTest(); // Chama a função para o início do teste
+	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -175,16 +175,16 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-/* TIM2 Callback: acende LED central após delay aleatório */
+/* TIM2 Callback: acende LED central após delay "aleatório" */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if (htim->Instance == TIM2 && ubTestInProgress)
+    if (htim->Instance == TIM2 && TestInProgress)
     {
         HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // LED central liga
 
         // Reinicia TIM3 do zero
         __HAL_TIM_SET_COUNTER(&htim3, 0);
-        uwTick_LED_On = 0;
+        TimerLED = 0;
 
         // Inicia Input Capture para Player1 (CH1) e Player2 (CH2)
         HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
@@ -195,26 +195,26 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 /* TIM3 Input Capture Callback: mede tempo de reação */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-    if (htim->Instance == TIM3 && ubTestInProgress)
+    if (htim->Instance == TIM3 && TestInProgress)
     {
         char msg[100];
 
         if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) // Player1
         {
             uint32_t ticks = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
-            uwReactionTime_P1 = ticks / 10; // converte o valor de micro segundo para ms
+            ReactionP1 = ticks / 10; // converte o valor de micro segundos para ms
             HAL_TIM_IC_Stop_IT(&htim3, TIM_CHANNEL_1);
         }
 
         if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) // Player2
         {
             uint32_t ticks = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
-            uwReactionTime_P2 = ticks / 10; // converte o valor de micro segundo para ms
+            ReactionP2 = ticks / 10; // converte o valor de micro segundo para ms
             HAL_TIM_IC_Stop_IT(&htim3, TIM_CHANNEL_2);
         }
 
-        // Se ambos já reagiram
-        if (uwReactionTime_P1 && uwReactionTime_P2)
+        // Verifica se ambos já reagiram
+        if (ReactionP1 && ReactionP2)
         {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET); // LED central desliga
 
@@ -224,80 +224,81 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
 
             // Envie o tempo dos dois players
-            sprintf(msg, "Player1: %lu ms\r\n", uwReactionTime_P1);
-            Send_UART_Message(msg);
-            sprintf(msg, "Player2: %lu ms\r\n", uwReactionTime_P2);
-            Send_UART_Message(msg);
+            sprintf(msg, "Player1: %lu ms\r\n", ReactionP1);
+            SendUART(msg);
+            sprintf(msg, "Player2: %lu ms\r\n", ReactionP2);
+            SendUART(msg);
 
             // Define vencedor
-            if (uwReactionTime_P1 < uwReactionTime_P2)
+            if (ReactionP1 < ReactionP2)
             {
-                Send_UART_Message("Vencedor: Player1\r\n");
+                SendUART("Vencedor: Player1\r\n");
                 HAL_GPIO_WritePin(GPIOC, LED_PLAYER1_Pin, GPIO_PIN_SET); // LED P1 liga
             }
-            else if (uwReactionTime_P2 < uwReactionTime_P1)
+            else if (ReactionP2 < ReactionP1)
             {
-                Send_UART_Message("Vencedor: Player2\r\n");
+                SendUART("Vencedor: Player2\r\n");
                 HAL_GPIO_WritePin(GPIOC, LED_PLAYER2_Pin, GPIO_PIN_SET); // LED P2 liga
             }
             else
             {
-                Send_UART_Message("Empate!\r\n");
+                SendUART("Empate!\r\n");
             }
 
             // Atualiza o HighScore
-            uint32_t menor = (uwReactionTime_P1 < uwReactionTime_P2) ? uwReactionTime_P1 : uwReactionTime_P2;
-            if (menor < uwHighScore) uwHighScore = menor;
-            sprintf(msg, "HighScore: %lu ms\r\n\n", uwHighScore);
-            Send_UART_Message(msg);
+            uint32_t menorTempo = (ReactionP1 < ReactionP2) ? ReactionP1 : ReactionP2;
+            if (menorTempo < HighScore) HighScore = menorTempo;
+            sprintf(msg, "HighScore: %lu ms\r\n\n", HighScore);
+            SendUART(msg);
 
             // Reinicia variáveis para o próximo teste
-            uwReactionTime_P1 = 0;
-            uwReactionTime_P2 = 0;
-            ubTestInProgress = 0;
+            ReactionP1 = 0;
+            ReactionP2 = 0;
+            TestInProgress = 0;
         }
     }
 }
 
 /* Função para enviar mensagem via UART */
-void Send_UART_Message(char *message) {
+void SendUART(char *message) {
 	HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
 }
 
-void TrafficLight_Sequence(void)
+/* Controle das luzes do semáforo*/
+void ControleSemaforo(void)
 {
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 
-    uint32_t maxDuty = __HAL_TIM_GET_AUTORELOAD(&htim4); // deve ser 999
+    uint32_t maxDuty = __HAL_TIM_GET_AUTORELOAD(&htim4); // ARR = 999
 
-    for (int ch = 1; ch <= 3; ch++)
+    for (int channel = 1; channel <= 3; channel++)
     {
-        for (uint32_t duty = 0; duty <= maxDuty; duty += 20) // passos de 20
+        for (uint32_t duty = 0; duty <= maxDuty; duty += 20) // Duty aumenta de 20 em 20
         {
-            if (ch == 1) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, duty);
-            if (ch == 2) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, duty);
-            if (ch == 3) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, duty);
+            if (channel == 1) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, duty);
+            if (channel == 2) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, duty);
+            if (channel == 3) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, duty);
 
-            HAL_Delay(30); // 50 steps × 30ms ≈ 1,5s
+            HAL_Delay(30); // Gera delay de 1,5s -- 999(ARR) ÷ 20(duty) x 0,03(hal_delay 30ms) ≈ 1,5s
         }
-        HAL_Delay(300); // pausa curta entre LEDs
+        HAL_Delay(300); // Pausa curta entre os LEDs
     }
 
-    // Garante que todos ficam no brilho máximo
+    // Garante que todos esteja ligados com mo brilho máximo
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, maxDuty);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, maxDuty);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, maxDuty);
 }
 
 /* Inicia o teste de reação */
-void StartReactionTest(void)
+void StartTest(void)
 {
-    if (ubTestInProgress == 0)
+    if (TestInProgress == 0)
     {
-        ubTestInProgress = 1;
-        Send_UART_Message("Inicio do Teste...\r\n");
+        TestInProgress = 1;
+        SendUART("Inicio do Teste...\r\n");
 
         // Reseta LEDs vencedores
         HAL_GPIO_WritePin(GPIOC, LED_PLAYER1_Pin, GPIO_PIN_RESET);
@@ -305,12 +306,12 @@ void StartReactionTest(void)
 
         // Executa a sequência do semáforo (com PWM)
         HAL_Delay(500);
-        TrafficLight_Sequence();
+        ControleSemaforo();
 
         // Delay aleatório 1-6s
-        uint32_t random_delay_ticks = (rand() % 50000) + 10000;
+        uint32_t randomDelay = (rand() % 50000) + 10000;
         __HAL_TIM_SET_COUNTER(&htim2, 0);
-        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, random_delay_ticks);
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, randomDelay);
         HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
     }
 }

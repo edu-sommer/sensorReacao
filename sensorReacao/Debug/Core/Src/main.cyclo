@@ -2,7 +2,7 @@
 ../Core/Src/main.c:133:6:SystemClock_Config	3
 ../Core/Src/main.c:179:6:HAL_TIM_OC_DelayElapsedCallback	3
 ../Core/Src/main.c:196:6:HAL_TIM_IC_CaptureCallback	11
-../Core/Src/main.c:263:6:Send_UART_Message	1
-../Core/Src/main.c:267:6:TrafficLight_Sequence	6
-../Core/Src/main.c:295:6:StartReactionTest	2
-../Core/Src/main.c:324:6:Error_Handler	1
+../Core/Src/main.c:263:6:SendUART	1
+../Core/Src/main.c:268:6:ControleSemaforo	6
+../Core/Src/main.c:296:6:StartTest	2
+../Core/Src/main.c:325:6:Error_Handler	1

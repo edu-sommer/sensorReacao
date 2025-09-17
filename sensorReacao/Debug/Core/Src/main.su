@@ -2,7 +2,7 @@
 ../Core/Src/main.c:133:6:SystemClock_Config	88	static
 ../Core/Src/main.c:179:6:HAL_TIM_OC_DelayElapsedCallback	16	static
 ../Core/Src/main.c:196:6:HAL_TIM_IC_CaptureCallback	128	static
-../Core/Src/main.c:263:6:Send_UART_Message	16	static
-../Core/Src/main.c:267:6:TrafficLight_Sequence	24	static
-../Core/Src/main.c:295:6:StartReactionTest	16	static
-../Core/Src/main.c:324:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:263:6:SendUART	16	static
+../Core/Src/main.c:268:6:ControleSemaforo	24	static
+../Core/Src/main.c:296:6:StartTest	16	static
+../Core/Src/main.c:325:6:Error_Handler	4	static,ignoring_inline_asm

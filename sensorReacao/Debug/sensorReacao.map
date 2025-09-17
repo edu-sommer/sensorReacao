@@ -3191,15 +3191,15 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
  .text.HAL_TIM_IC_CaptureCallback
                 0x080008a0      0x1b4 ./Core/Src/main.o
                 0x080008a0                HAL_TIM_IC_CaptureCallback
- .text.Send_UART_Message
+ .text.SendUART
                 0x08000a54       0x2c ./Core/Src/main.o
-                0x08000a54                Send_UART_Message
- .text.TrafficLight_Sequence
+                0x08000a54                SendUART
+ .text.ControleSemaforo
                 0x08000a80       0xa8 ./Core/Src/main.o
-                0x08000a80                TrafficLight_Sequence
- .text.StartReactionTest
+                0x08000a80                ControleSemaforo
+ .text.StartTest
                 0x08000b28       0x98 ./Core/Src/main.o
-                0x08000b28                StartReactionTest
+                0x08000b28                StartTest
  .text.Error_Handler
                 0x08000bc0        0xc ./Core/Src/main.o
                 0x08000bc0                Error_Handler
@@ -3784,86 +3784,86 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
 .iplt           0x08006888        0x0
  .iplt          0x08006888        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08006888      0x19c
+.rodata         0x08006888      0x198
                 0x08006888                        . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x08006888       0xa1 ./Core/Src/main.o
+ .rodata        0x08006888       0x9d ./Core/Src/main.o
  *(.rodata*)
- *fill*         0x08006929        0x3 
+ *fill*         0x08006925        0x3 
  .rodata.AHBPrescTable
-                0x0800692c       0x10 ./Core/Src/system_stm32f4xx.o
-                0x0800692c                AHBPrescTable
+                0x08006928       0x10 ./Core/Src/system_stm32f4xx.o
+                0x08006928                AHBPrescTable
  .rodata.APBPrescTable
-                0x0800693c        0x8 ./Core/Src/system_stm32f4xx.o
-                0x0800693c                APBPrescTable
+                0x08006938        0x8 ./Core/Src/system_stm32f4xx.o
+                0x08006938                APBPrescTable
  .rodata.srand.str1.1
-                0x08006944       0xde D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-rand.o)
+                0x08006940       0xde D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-rand.o)
                                  0x6f (size before relaxing)
  .rodata.__assert_func.str1.1
-                0x08006a22       0x3d D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-assert.o)
+                0x08006a1e       0x3d D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-assert.o)
  .rodata._svfprintf_r.str1.1
-                0x08006a22       0x11 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-svfprintf.o)
+                0x08006a1e       0x11 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-svfprintf.o)
  .rodata._printf_i.str1.1
-                0x08006a22       0x22 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-vfprintf_i.o)
+                0x08006a1e       0x22 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-vfprintf_i.o)
  .rodata._vfprintf_r.str1.1
-                0x08006a22       0x11 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-vfprintf.o)
-                0x08006a60                        . = ALIGN (0x4)
- *fill*         0x08006a22        0x2 
+                0x08006a1e       0x11 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-nano-vfprintf.o)
+                0x08006a5c                        . = ALIGN (0x4)
+ *fill*         0x08006a1e        0x2 
 
-.ARM.extab      0x08006a24        0x0
-                0x08006a24                        . = ALIGN (0x4)
+.ARM.extab      0x08006a20        0x0
+                0x08006a20                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08006a24                        . = ALIGN (0x4)
+                0x08006a20                        . = ALIGN (0x4)
 
-.ARM            0x08006a24        0x8
-                0x08006a24                        . = ALIGN (0x4)
-                0x08006a24                        __exidx_start = .
+.ARM            0x08006a20        0x8
+                0x08006a20                        . = ALIGN (0x4)
+                0x08006a20                        __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x08006a24        0x8 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-strlen.o)
- .ARM.exidx     0x08006a2c        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memchr.o)
+ .ARM.exidx     0x08006a20        0x8 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-strlen.o)
+ .ARM.exidx     0x08006a28        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memchr.o)
                                   0x8 (size before relaxing)
- .ARM.exidx     0x08006a2c        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .ARM.exidx     0x08006a28        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
                                   0x8 (size before relaxing)
-                0x08006a2c                        __exidx_end = .
-                0x08006a2c                        . = ALIGN (0x4)
+                0x08006a28                        __exidx_end = .
+                0x08006a28                        . = ALIGN (0x4)
 
-.preinit_array  0x08006a2c        0x0
-                0x08006a2c                        . = ALIGN (0x4)
-                0x08006a2c                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08006a28        0x0
+                0x08006a28                        . = ALIGN (0x4)
+                0x08006a28                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08006a2c                        PROVIDE (__preinit_array_end = .)
-                0x08006a2c                        . = ALIGN (0x4)
+                0x08006a28                        PROVIDE (__preinit_array_end = .)
+                0x08006a28                        . = ALIGN (0x4)
 
-.init_array     0x08006a2c        0x4
-                0x08006a2c                        . = ALIGN (0x4)
-                0x08006a2c                        PROVIDE (__init_array_start = .)
+.init_array     0x08006a28        0x4
+                0x08006a28                        . = ALIGN (0x4)
+                0x08006a28                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08006a2c        0x4 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08006a30                        PROVIDE (__init_array_end = .)
-                0x08006a30                        . = ALIGN (0x4)
+ .init_array    0x08006a28        0x4 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08006a2c                        PROVIDE (__init_array_end = .)
+                0x08006a2c                        . = ALIGN (0x4)
 
-.fini_array     0x08006a30        0x4
-                0x08006a30                        . = ALIGN (0x4)
+.fini_array     0x08006a2c        0x4
+                0x08006a2c                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08006a30        0x4 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x08006a2c        0x4 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x08006a34                        . = ALIGN (0x4)
-                0x08006a34                        _sidata = LOADADDR (.data)
+                0x08006a30                        . = ALIGN (0x4)
+                0x08006a30                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x08006a34        0x0
- .rel.iplt      0x08006a34        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08006a30        0x0
+ .rel.iplt      0x08006a30        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.data           0x20000000       0x6c load address 0x08006a34
+.data           0x20000000       0x6c load address 0x08006a30
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
  *(.data*)
- .data.uwHighScore
+ .data.HighScore
                 0x20000000        0x4 ./Core/Src/main.o
-                0x20000000                uwHighScore
+                0x20000000                HighScore
  .data.SystemCoreClock
                 0x20000004        0x4 ./Core/Src/system_stm32f4xx.o
                 0x20000004                SystemCoreClock
@@ -3887,28 +3887,27 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
                 0x2000006c                        . = ALIGN (0x4)
                 0x2000006c                        _edata = .
 
-.igot.plt       0x2000006c        0x0 load address 0x08006aa0
+.igot.plt       0x2000006c        0x0 load address 0x08006a9c
  .igot.plt      0x2000006c        0x0 D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x2000006c                        . = ALIGN (0x4)
 
-.bss            0x2000006c      0x2a0 load address 0x08006aa0
+.bss            0x2000006c      0x2a0 load address 0x08006a9c
                 0x2000006c                        _sbss = .
                 0x2000006c                        __bss_start__ = _sbss
  *(.bss)
  .bss           0x2000006c       0x1c D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.bss*)
- .bss.uwTick_LED_On
-                0x20000088        0x4 ./Core/Src/main.o
-                0x20000088                uwTick_LED_On
- .bss.uwReactionTime_P1
+ .bss.TimerLED  0x20000088        0x4 ./Core/Src/main.o
+                0x20000088                TimerLED
+ .bss.ReactionP1
                 0x2000008c        0x4 ./Core/Src/main.o
-                0x2000008c                uwReactionTime_P1
- .bss.uwReactionTime_P2
+                0x2000008c                ReactionP1
+ .bss.ReactionP2
                 0x20000090        0x4 ./Core/Src/main.o
-                0x20000090                uwReactionTime_P2
- .bss.ubTestInProgress
+                0x20000090                ReactionP2
+ .bss.TestInProgress
                 0x20000094        0x1 ./Core/Src/main.o
-                0x20000094                ubTestInProgress
+                0x20000094                TestInProgress
  *fill*         0x20000095        0x3 
  .bss.__sbrk_heap_end
                 0x20000098        0x4 ./Core/Src/sysmem.o
@@ -3948,7 +3947,7 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
                 0x2000030c                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000030c      0x604 load address 0x08006aa0
+                0x2000030c      0x604 load address 0x08006a9c
                 0x20000310                        . = ALIGN (0x8)
  *fill*         0x2000030c        0x4 
                 [!provide]                        PROVIDE (end = .)
@@ -4124,26 +4123,26 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
  .debug_info    0x0000af8c     0x14db ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_info    0x0000c467     0x2f4f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_abbrev   0x00000000     0x2534
+.debug_abbrev   0x00000000     0x2523
  .debug_abbrev  0x00000000      0x152 ./Core/Src/gpio.o
- .debug_abbrev  0x00000152      0x2e2 ./Core/Src/main.o
- .debug_abbrev  0x00000434       0xf4 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_abbrev  0x00000528      0x19c ./Core/Src/stm32f4xx_it.o
- .debug_abbrev  0x000006c4      0x1b6 ./Core/Src/syscalls.o
- .debug_abbrev  0x0000087a       0xbc ./Core/Src/sysmem.o
- .debug_abbrev  0x00000936      0x11a ./Core/Src/system_stm32f4xx.o
- .debug_abbrev  0x00000a50      0x26e ./Core/Src/tim.o
- .debug_abbrev  0x00000cbe      0x218 ./Core/Src/usart.o
- .debug_abbrev  0x00000ed6       0x24 ./Core/Startup/startup_stm32f446retx.o
- .debug_abbrev  0x00000efa      0x214 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_abbrev  0x0000110e      0x31d ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x0000142b      0x264 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_abbrev  0x0000168f      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x00001863      0x2b7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x00001b1a      0x211 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_abbrev  0x00001d2b      0x278 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_abbrev  0x00001fa3      0x283 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_abbrev  0x00002226      0x30e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_abbrev  0x00000152      0x2d1 ./Core/Src/main.o
+ .debug_abbrev  0x00000423       0xf4 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x00000517      0x19c ./Core/Src/stm32f4xx_it.o
+ .debug_abbrev  0x000006b3      0x1b6 ./Core/Src/syscalls.o
+ .debug_abbrev  0x00000869       0xbc ./Core/Src/sysmem.o
+ .debug_abbrev  0x00000925      0x11a ./Core/Src/system_stm32f4xx.o
+ .debug_abbrev  0x00000a3f      0x26e ./Core/Src/tim.o
+ .debug_abbrev  0x00000cad      0x218 ./Core/Src/usart.o
+ .debug_abbrev  0x00000ec5       0x24 ./Core/Startup/startup_stm32f446retx.o
+ .debug_abbrev  0x00000ee9      0x214 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_abbrev  0x000010fd      0x31d ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x0000141a      0x264 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_abbrev  0x0000167e      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x00001852      0x2b7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x00001b09      0x211 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_abbrev  0x00001d1a      0x278 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_abbrev  0x00001f92      0x283 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_abbrev  0x00002215      0x30e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .debug_aranges  0x00000000      0xdf0
  .debug_aranges
@@ -4356,27 +4355,27 @@ LOAD D:/DUDU SOMMER/JOGOS/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32c
  .debug_line    0x0000e5e5     0x1a5c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_line    0x00010041     0x2644 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_str      0x00000000    0xd312b
- .debug_str     0x00000000    0xd312b ./Core/Src/gpio.o
+.debug_str      0x00000000    0xd3102
+ .debug_str     0x00000000    0xd3102 ./Core/Src/gpio.o
                               0xc9b81 (size before relaxing)
- .debug_str     0x000d312b    0xcdfa2 ./Core/Src/main.o
- .debug_str     0x000d312b    0xc9ad3 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_str     0x000d312b    0xca1f1 ./Core/Src/stm32f4xx_it.o
- .debug_str     0x000d312b     0x99df ./Core/Src/syscalls.o
- .debug_str     0x000d312b     0x777d ./Core/Src/sysmem.o
- .debug_str     0x000d312b    0xc989e ./Core/Src/system_stm32f4xx.o
- .debug_str     0x000d312b    0xca8fd ./Core/Src/tim.o
- .debug_str     0x000d312b    0xca5b3 ./Core/Src/usart.o
- .debug_str     0x000d312b       0x7f ./Core/Startup/startup_stm32f446retx.o
- .debug_str     0x000d312b    0xca463 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_str     0x000d312b    0xca1ba ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_str     0x000d312b    0xc9c93 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_str     0x000d312b    0xc9a19 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_str     0x000d312b    0xc9cd7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_str     0x000d312b    0xc9d0a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_str     0x000d312b    0xcac03 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_str     0x000d312b    0xca40f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_str     0x000d312b    0xca28e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_str     0x000d3102    0xcdf7b ./Core/Src/main.o
+ .debug_str     0x000d3102    0xc9ad3 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_str     0x000d3102    0xca1f1 ./Core/Src/stm32f4xx_it.o
+ .debug_str     0x000d3102     0x99df ./Core/Src/syscalls.o
+ .debug_str     0x000d3102     0x777d ./Core/Src/sysmem.o
+ .debug_str     0x000d3102    0xc989e ./Core/Src/system_stm32f4xx.o
+ .debug_str     0x000d3102    0xca8fd ./Core/Src/tim.o
+ .debug_str     0x000d3102    0xca5b3 ./Core/Src/usart.o
+ .debug_str     0x000d3102       0x7f ./Core/Startup/startup_stm32f446retx.o
+ .debug_str     0x000d3102    0xca463 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_str     0x000d3102    0xca1ba ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_str     0x000d3102    0xc9c93 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_str     0x000d3102    0xc9a19 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_str     0x000d3102    0xc9cd7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_str     0x000d3102    0xc9d0a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_str     0x000d3102    0xcac03 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_str     0x000d3102    0xca40f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_str     0x000d3102    0xca28e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .comment        0x00000000       0x43
  .comment       0x00000000       0x43 ./Core/Src/gpio.o

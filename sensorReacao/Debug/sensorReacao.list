@@ -7,45 +7,45 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         000066b8  080001d0  080001d0  000011d0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000019c  08006888  08006888  00007888  2**2
+  2 .rodata       00000198  08006888  08006888  00007888  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08006a24  08006a24  0000806c  2**0
+  3 .ARM.extab    00000000  08006a20  08006a20  0000806c  2**0
                   CONTENTS, READONLY
-  4 .ARM          00000008  08006a24  08006a24  00007a24  2**2
+  4 .ARM          00000008  08006a20  08006a20  00007a20  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08006a2c  08006a2c  0000806c  2**0
+  5 .preinit_array 00000000  08006a28  08006a28  0000806c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08006a2c  08006a2c  00007a2c  2**2
+  6 .init_array   00000004  08006a28  08006a28  00007a28  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  08006a30  08006a30  00007a30  2**2
+  7 .fini_array   00000004  08006a2c  08006a2c  00007a2c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         0000006c  20000000  08006a34  00008000  2**2
+  8 .data         0000006c  20000000  08006a30  00008000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000002a0  2000006c  08006aa0  0000806c  2**2
+  9 .bss          000002a0  2000006c  08006a9c  0000806c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000030c  08006aa0  0000830c  2**0
+ 10 ._user_heap_stack 00000604  2000030c  08006a9c  0000830c  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0000806c  2**0
                   CONTENTS, READONLY
  12 .debug_info   0000f3b6  00000000  00000000  0000809c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002534  00000000  00000000  00017452  2**0
+ 13 .debug_abbrev 00002523  00000000  00000000  00017452  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000df0  00000000  00000000  00019988  2**3
+ 14 .debug_aranges 00000df0  00000000  00000000  00019978  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00000ad6  00000000  00000000  0001a778  2**0
+ 15 .debug_rnglists 00000ad6  00000000  00000000  0001a768  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000232b7  00000000  00000000  0001b24e  2**0
+ 16 .debug_macro  000232b7  00000000  00000000  0001b23e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00012685  00000000  00000000  0003e505  2**0
+ 17 .debug_line   00012685  00000000  00000000  0003e4f5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000d312b  00000000  00000000  00050b8a  2**0
+ 18 .debug_str    000d3102  00000000  00000000  00050b7a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00123cb5  2**0
+ 19 .comment      00000043  00000000  00000000  00123c7c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004490  00000000  00000000  00123cf8  2**2
+ 20 .debug_frame  00004490  00000000  00000000  00123cc0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000063  00000000  00000000  00128188  2**0
+ 21 .debug_line_str 00000063  00000000  00000000  00128150  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -645,26 +645,26 @@ int main(void)
   MX_TIM4_Init();
  8000728:	f000 fca6 	bl	8001078 <MX_TIM4_Init>
   /* USER CODE BEGIN 2 */
-  Send_UART_Message("Jogo Inicializado\r\n\n");
+  SendUART("Jogo Iniciado.\r\n\n");
  800072c:	480b      	ldr	r0, [pc, #44]	@ (800075c <main+0x50>)
- 800072e:	f000 f991 	bl	8000a54 <Send_UART_Message>
+ 800072e:	f000 f991 	bl	8000a54 <SendUART>
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
 	  // Botão START inicia o jogo
-	        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
+	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
  8000732:	2120      	movs	r1, #32
  8000734:	480a      	ldr	r0, [pc, #40]	@ (8000760 <main+0x54>)
  8000736:	f001 faa7 	bl	8001c88 <HAL_GPIO_ReadPin>
  800073a:	4603      	mov	r3, r0
  800073c:	2b00      	cmp	r3, #0
  800073e:	d1f8      	bne.n	8000732 <main+0x26>
-	        {
-	            HAL_Delay(50);
+	  {
+		  HAL_Delay(50);
  8000740:	2032      	movs	r0, #50	@ 0x32
  8000742:	f000 ff45 	bl	80015d0 <HAL_Delay>
-	            while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
+	      while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET);
  8000746:	bf00      	nop
  8000748:	2120      	movs	r1, #32
  800074a:	4805      	ldr	r0, [pc, #20]	@ (8000760 <main+0x54>)
@@ -672,9 +672,9 @@ int main(void)
  8000750:	4603      	mov	r3, r0
  8000752:	2b00      	cmp	r3, #0
  8000754:	d0f8      	beq.n	8000748 <main+0x3c>
-	            StartReactionTest();
- 8000756:	f000 f9e7 	bl	8000b28 <StartReactionTest>
-	        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
+	      StartTest(); // Chama a função para o início do teste
+ 8000756:	f000 f9e7 	bl	8000b28 <StartTest>
+	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5) == GPIO_PIN_RESET)
  800075a:	e7ea      	b.n	8000732 <main+0x26>
  800075c:	08006888 	.word	0x08006888
  8000760:	40020800 	.word	0x40020800
@@ -823,14 +823,14 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-/* TIM2 Callback: acende LED central após delay aleatório */
+/* TIM2 Callback: acende LED central após delay "aleatório" */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 {
  8000840:	b580      	push	{r7, lr}
  8000842:	b082      	sub	sp, #8
  8000844:	af00      	add	r7, sp, #0
  8000846:	6078      	str	r0, [r7, #4]
-    if (htim->Instance == TIM2 && ubTestInProgress)
+    if (htim->Instance == TIM2 && TestInProgress)
  8000848:	687b      	ldr	r3, [r7, #4]
  800084a:	681b      	ldr	r3, [r3, #0]
  800084c:	f1b3 4f80 	cmp.w	r3, #1073741824	@ 0x40000000
@@ -853,7 +853,7 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
  800086a:	681b      	ldr	r3, [r3, #0]
  800086c:	2200      	movs	r2, #0
  800086e:	625a      	str	r2, [r3, #36]	@ 0x24
-        uwTick_LED_On = 0;
+        TimerLED = 0;
  8000870:	4b0a      	ldr	r3, [pc, #40]	@ (800089c <HAL_TIM_OC_DelayElapsedCallback+0x5c>)
  8000872:	2200      	movs	r2, #0
  8000874:	601a      	str	r2, [r3, #0]
@@ -888,7 +888,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80008a2:	b09e      	sub	sp, #120	@ 0x78
  80008a4:	af00      	add	r7, sp, #0
  80008a6:	6078      	str	r0, [r7, #4]
-    if (htim->Instance == TIM3 && ubTestInProgress)
+    if (htim->Instance == TIM3 && TestInProgress)
  80008a8:	687b      	ldr	r3, [r7, #4]
  80008aa:	681b      	ldr	r3, [r3, #0]
  80008ac:	4a5a      	ldr	r2, [pc, #360]	@ (8000a18 <HAL_TIM_IC_CaptureCallback+0x178>)
@@ -913,7 +913,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80008ca:	6878      	ldr	r0, [r7, #4]
  80008cc:	f003 f8d2 	bl	8003a74 <HAL_TIM_ReadCapturedValue>
  80008d0:	6778      	str	r0, [r7, #116]	@ 0x74
-            uwReactionTime_P1 = ticks / 10; // converte o valor de micro segundo para ms
+            ReactionP1 = ticks / 10; // converte o valor de micro segundos para ms
  80008d2:	6f7b      	ldr	r3, [r7, #116]	@ 0x74
  80008d4:	4a52      	ldr	r2, [pc, #328]	@ (8000a20 <HAL_TIM_IC_CaptureCallback+0x180>)
  80008d6:	fba2 2303 	umull	r2, r3, r2, r3
@@ -937,7 +937,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80008f2:	6878      	ldr	r0, [r7, #4]
  80008f4:	f003 f8be 	bl	8003a74 <HAL_TIM_ReadCapturedValue>
  80008f8:	6738      	str	r0, [r7, #112]	@ 0x70
-            uwReactionTime_P2 = ticks / 10; // converte o valor de micro segundo para ms
+            ReactionP2 = ticks / 10; // converte o valor de micro segundo para ms
  80008fa:	6f3b      	ldr	r3, [r7, #112]	@ 0x70
  80008fc:	4a48      	ldr	r2, [pc, #288]	@ (8000a20 <HAL_TIM_IC_CaptureCallback+0x180>)
  80008fe:	fba2 2303 	umull	r2, r3, r2, r3
@@ -951,7 +951,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
         }
 
         // Se ambos já reagiram
-        if (uwReactionTime_P1 && uwReactionTime_P2)
+        if (ReactionP1 && ReactionP2)
  8000910:	4b44      	ldr	r3, [pc, #272]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
  8000912:	681b      	ldr	r3, [r3, #0]
  8000914:	2b00      	cmp	r3, #0
@@ -985,31 +985,31 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  8000942:	63da      	str	r2, [r3, #60]	@ 0x3c
 
             // Envie o tempo dos dois players
-            sprintf(msg, "Player1: %lu ms\r\n", uwReactionTime_P1);
+            sprintf(msg, "Player1: %lu ms\r\n", ReactionP1);
  8000944:	4b37      	ldr	r3, [pc, #220]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
  8000946:	681a      	ldr	r2, [r3, #0]
  8000948:	f107 0308 	add.w	r3, r7, #8
  800094c:	493a      	ldr	r1, [pc, #232]	@ (8000a38 <HAL_TIM_IC_CaptureCallback+0x198>)
  800094e:	4618      	mov	r0, r3
  8000950:	f004 feda 	bl	8005708 <siprintf>
-            Send_UART_Message(msg);
+            SendUART(msg);
  8000954:	f107 0308 	add.w	r3, r7, #8
  8000958:	4618      	mov	r0, r3
- 800095a:	f000 f87b 	bl	8000a54 <Send_UART_Message>
-            sprintf(msg, "Player2: %lu ms\r\n", uwReactionTime_P2);
+ 800095a:	f000 f87b 	bl	8000a54 <SendUART>
+            sprintf(msg, "Player2: %lu ms\r\n", ReactionP2);
  800095e:	4b33      	ldr	r3, [pc, #204]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
  8000960:	681a      	ldr	r2, [r3, #0]
  8000962:	f107 0308 	add.w	r3, r7, #8
  8000966:	4935      	ldr	r1, [pc, #212]	@ (8000a3c <HAL_TIM_IC_CaptureCallback+0x19c>)
  8000968:	4618      	mov	r0, r3
  800096a:	f004 fecd 	bl	8005708 <siprintf>
-            Send_UART_Message(msg);
+            SendUART(msg);
  800096e:	f107 0308 	add.w	r3, r7, #8
  8000972:	4618      	mov	r0, r3
- 8000974:	f000 f86e 	bl	8000a54 <Send_UART_Message>
+ 8000974:	f000 f86e 	bl	8000a54 <SendUART>
 
             // Define vencedor
-            if (uwReactionTime_P1 < uwReactionTime_P2)
+            if (ReactionP1 < ReactionP2)
  8000978:	4b2a      	ldr	r3, [pc, #168]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
  800097a:	681a      	ldr	r2, [r3, #0]
  800097c:	4b2b      	ldr	r3, [pc, #172]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
@@ -1017,9 +1017,9 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  8000980:	429a      	cmp	r2, r3
  8000982:	d209      	bcs.n	8000998 <HAL_TIM_IC_CaptureCallback+0xf8>
             {
-                Send_UART_Message("Vencedor: Player1\r\n");
+                SendUART("Vencedor: Player1\r\n");
  8000984:	482e      	ldr	r0, [pc, #184]	@ (8000a40 <HAL_TIM_IC_CaptureCallback+0x1a0>)
- 8000986:	f000 f865 	bl	8000a54 <Send_UART_Message>
+ 8000986:	f000 f865 	bl	8000a54 <SendUART>
                 HAL_GPIO_WritePin(GPIOC, LED_PLAYER1_Pin, GPIO_PIN_SET); // LED P1 liga
  800098a:	2201      	movs	r2, #1
  800098c:	f44f 7100 	mov.w	r1, #512	@ 0x200
@@ -1027,7 +1027,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  8000992:	f001 f991 	bl	8001cb8 <HAL_GPIO_WritePin>
  8000996:	e011      	b.n	80009bc <HAL_TIM_IC_CaptureCallback+0x11c>
             }
-            else if (uwReactionTime_P2 < uwReactionTime_P1)
+            else if (ReactionP2 < ReactionP1)
  8000998:	4b24      	ldr	r3, [pc, #144]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
  800099a:	681a      	ldr	r2, [r3, #0]
  800099c:	4b21      	ldr	r3, [pc, #132]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
@@ -1035,9 +1035,9 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80009a0:	429a      	cmp	r2, r3
  80009a2:	d208      	bcs.n	80009b6 <HAL_TIM_IC_CaptureCallback+0x116>
             {
-                Send_UART_Message("Vencedor: Player2\r\n");
+                SendUART("Vencedor: Player2\r\n");
  80009a4:	4827      	ldr	r0, [pc, #156]	@ (8000a44 <HAL_TIM_IC_CaptureCallback+0x1a4>)
- 80009a6:	f000 f855 	bl	8000a54 <Send_UART_Message>
+ 80009a6:	f000 f855 	bl	8000a54 <SendUART>
                 HAL_GPIO_WritePin(GPIOC, LED_PLAYER2_Pin, GPIO_PIN_SET); // LED P2 liga
  80009aa:	2201      	movs	r2, #1
  80009ac:	2180      	movs	r1, #128	@ 0x80
@@ -1047,13 +1047,13 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             }
             else
             {
-                Send_UART_Message("Empate!\r\n");
+                SendUART("Empate!\r\n");
  80009b6:	4824      	ldr	r0, [pc, #144]	@ (8000a48 <HAL_TIM_IC_CaptureCallback+0x1a8>)
- 80009b8:	f000 f84c 	bl	8000a54 <Send_UART_Message>
+ 80009b8:	f000 f84c 	bl	8000a54 <SendUART>
             }
 
             // Atualiza o HighScore
-            uint32_t menor = (uwReactionTime_P1 < uwReactionTime_P2) ? uwReactionTime_P1 : uwReactionTime_P2;
+            uint32_t menorTempo = (ReactionP1 < ReactionP2) ? ReactionP1 : ReactionP2;
  80009bc:	4b19      	ldr	r3, [pc, #100]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
  80009be:	681a      	ldr	r2, [r3, #0]
  80009c0:	4b1a      	ldr	r3, [pc, #104]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
@@ -1066,7 +1066,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80009ce:	4b17      	ldr	r3, [pc, #92]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
  80009d0:	681b      	ldr	r3, [r3, #0]
  80009d2:	66fb      	str	r3, [r7, #108]	@ 0x6c
-            if (menor < uwHighScore) uwHighScore = menor;
+            if (menorTempo < HighScore) HighScore = menorTempo;
  80009d4:	4b1d      	ldr	r3, [pc, #116]	@ (8000a4c <HAL_TIM_IC_CaptureCallback+0x1ac>)
  80009d6:	681b      	ldr	r3, [r3, #0]
  80009d8:	6efa      	ldr	r2, [r7, #108]	@ 0x6c
@@ -1075,28 +1075,28 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  80009de:	4a1b      	ldr	r2, [pc, #108]	@ (8000a4c <HAL_TIM_IC_CaptureCallback+0x1ac>)
  80009e0:	6efb      	ldr	r3, [r7, #108]	@ 0x6c
  80009e2:	6013      	str	r3, [r2, #0]
-            sprintf(msg, "HighScore: %lu ms\r\n\n", uwHighScore);
+            sprintf(msg, "HighScore: %lu ms\r\n\n", HighScore);
  80009e4:	4b19      	ldr	r3, [pc, #100]	@ (8000a4c <HAL_TIM_IC_CaptureCallback+0x1ac>)
  80009e6:	681a      	ldr	r2, [r3, #0]
  80009e8:	f107 0308 	add.w	r3, r7, #8
  80009ec:	4918      	ldr	r1, [pc, #96]	@ (8000a50 <HAL_TIM_IC_CaptureCallback+0x1b0>)
  80009ee:	4618      	mov	r0, r3
  80009f0:	f004 fe8a 	bl	8005708 <siprintf>
-            Send_UART_Message(msg);
+            SendUART(msg);
  80009f4:	f107 0308 	add.w	r3, r7, #8
  80009f8:	4618      	mov	r0, r3
- 80009fa:	f000 f82b 	bl	8000a54 <Send_UART_Message>
+ 80009fa:	f000 f82b 	bl	8000a54 <SendUART>
 
             // Reinicia variáveis para o próximo teste
-            uwReactionTime_P1 = 0;
+            ReactionP1 = 0;
  80009fe:	4b09      	ldr	r3, [pc, #36]	@ (8000a24 <HAL_TIM_IC_CaptureCallback+0x184>)
  8000a00:	2200      	movs	r2, #0
  8000a02:	601a      	str	r2, [r3, #0]
-            uwReactionTime_P2 = 0;
+            ReactionP2 = 0;
  8000a04:	4b09      	ldr	r3, [pc, #36]	@ (8000a2c <HAL_TIM_IC_CaptureCallback+0x18c>)
  8000a06:	2200      	movs	r2, #0
  8000a08:	601a      	str	r2, [r3, #0]
-            ubTestInProgress = 0;
+            TestInProgress = 0;
  8000a0a:	4b04      	ldr	r3, [pc, #16]	@ (8000a1c <HAL_TIM_IC_CaptureCallback+0x17c>)
  8000a0c:	2200      	movs	r2, #0
  8000a0e:	701a      	strb	r2, [r3, #0]
@@ -1115,18 +1115,18 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
  8000a2c:	20000090 	.word	0x20000090
  8000a30:	40020800 	.word	0x40020800
  8000a34:	2000012c 	.word	0x2000012c
- 8000a38:	080068a0 	.word	0x080068a0
- 8000a3c:	080068b4 	.word	0x080068b4
- 8000a40:	080068c8 	.word	0x080068c8
- 8000a44:	080068dc 	.word	0x080068dc
- 8000a48:	080068f0 	.word	0x080068f0
+ 8000a38:	0800689c 	.word	0x0800689c
+ 8000a3c:	080068b0 	.word	0x080068b0
+ 8000a40:	080068c4 	.word	0x080068c4
+ 8000a44:	080068d8 	.word	0x080068d8
+ 8000a48:	080068ec 	.word	0x080068ec
  8000a4c:	20000000 	.word	0x20000000
- 8000a50:	080068fc 	.word	0x080068fc
+ 8000a50:	080068f8 	.word	0x080068f8
 
-08000a54 <Send_UART_Message>:
+08000a54 <SendUART>:
 
 /* Função para enviar mensagem via UART */
-void Send_UART_Message(char *message) {
+void SendUART(char *message) {
  8000a54:	b580      	push	{r7, lr}
  8000a56:	b082      	sub	sp, #8
  8000a58:	af00      	add	r7, sp, #0
@@ -1138,7 +1138,7 @@ void Send_UART_Message(char *message) {
  8000a64:	b29a      	uxth	r2, r3
  8000a66:	f04f 33ff 	mov.w	r3, #4294967295
  8000a6a:	6879      	ldr	r1, [r7, #4]
- 8000a6c:	4803      	ldr	r0, [pc, #12]	@ (8000a7c <Send_UART_Message+0x28>)
+ 8000a6c:	4803      	ldr	r0, [pc, #12]	@ (8000a7c <SendUART+0x28>)
  8000a6e:	f003 fd83 	bl	8004578 <HAL_UART_Transmit>
 }
  8000a72:	bf00      	nop
@@ -1148,63 +1148,64 @@ void Send_UART_Message(char *message) {
  8000a7a:	bf00      	nop
  8000a7c:	20000174 	.word	0x20000174
 
-08000a80 <TrafficLight_Sequence>:
+08000a80 <ControleSemaforo>:
 
-void TrafficLight_Sequence(void)
+/* Controle das luzes do semáforo*/
+void ControleSemaforo(void)
 {
  8000a80:	b580      	push	{r7, lr}
  8000a82:	b084      	sub	sp, #16
  8000a84:	af00      	add	r7, sp, #0
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
  8000a86:	2100      	movs	r1, #0
- 8000a88:	4826      	ldr	r0, [pc, #152]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000a88:	4826      	ldr	r0, [pc, #152]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000a8a:	f002 f92f 	bl	8002cec <HAL_TIM_PWM_Start>
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
  8000a8e:	2104      	movs	r1, #4
- 8000a90:	4824      	ldr	r0, [pc, #144]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000a90:	4824      	ldr	r0, [pc, #144]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000a92:	f002 f92b 	bl	8002cec <HAL_TIM_PWM_Start>
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
  8000a96:	2108      	movs	r1, #8
- 8000a98:	4822      	ldr	r0, [pc, #136]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000a98:	4822      	ldr	r0, [pc, #136]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000a9a:	f002 f927 	bl	8002cec <HAL_TIM_PWM_Start>
 
     uint32_t maxDuty = __HAL_TIM_GET_AUTORELOAD(&htim4); // deve ser 999
- 8000a9e:	4b21      	ldr	r3, [pc, #132]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000a9e:	4b21      	ldr	r3, [pc, #132]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000aa0:	681b      	ldr	r3, [r3, #0]
  8000aa2:	6adb      	ldr	r3, [r3, #44]	@ 0x2c
  8000aa4:	607b      	str	r3, [r7, #4]
 
-    for (int ch = 1; ch <= 3; ch++)
+    for (int channel = 1; channel <= 3; channel++)
  8000aa6:	2301      	movs	r3, #1
  8000aa8:	60fb      	str	r3, [r7, #12]
- 8000aaa:	e028      	b.n	8000afe <TrafficLight_Sequence+0x7e>
+ 8000aaa:	e028      	b.n	8000afe <ControleSemaforo+0x7e>
     {
         for (uint32_t duty = 0; duty <= maxDuty; duty += 20) // passos de 20
  8000aac:	2300      	movs	r3, #0
  8000aae:	60bb      	str	r3, [r7, #8]
- 8000ab0:	e01a      	b.n	8000ae8 <TrafficLight_Sequence+0x68>
+ 8000ab0:	e01a      	b.n	8000ae8 <ControleSemaforo+0x68>
         {
-            if (ch == 1) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, duty);
+            if (channel == 1) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, duty);
  8000ab2:	68fb      	ldr	r3, [r7, #12]
  8000ab4:	2b01      	cmp	r3, #1
- 8000ab6:	d103      	bne.n	8000ac0 <TrafficLight_Sequence+0x40>
- 8000ab8:	4b1a      	ldr	r3, [pc, #104]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000ab6:	d103      	bne.n	8000ac0 <ControleSemaforo+0x40>
+ 8000ab8:	4b1a      	ldr	r3, [pc, #104]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000aba:	681b      	ldr	r3, [r3, #0]
  8000abc:	68ba      	ldr	r2, [r7, #8]
  8000abe:	635a      	str	r2, [r3, #52]	@ 0x34
-            if (ch == 2) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, duty);
+            if (channel == 2) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, duty);
  8000ac0:	68fb      	ldr	r3, [r7, #12]
  8000ac2:	2b02      	cmp	r3, #2
- 8000ac4:	d103      	bne.n	8000ace <TrafficLight_Sequence+0x4e>
- 8000ac6:	4b17      	ldr	r3, [pc, #92]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000ac4:	d103      	bne.n	8000ace <ControleSemaforo+0x4e>
+ 8000ac6:	4b17      	ldr	r3, [pc, #92]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000ac8:	681b      	ldr	r3, [r3, #0]
  8000aca:	68ba      	ldr	r2, [r7, #8]
  8000acc:	639a      	str	r2, [r3, #56]	@ 0x38
-            if (ch == 3) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, duty);
+            if (channel == 3) __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, duty);
  8000ace:	68fb      	ldr	r3, [r7, #12]
  8000ad0:	2b03      	cmp	r3, #3
- 8000ad2:	d103      	bne.n	8000adc <TrafficLight_Sequence+0x5c>
- 8000ad4:	4b13      	ldr	r3, [pc, #76]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000ad2:	d103      	bne.n	8000adc <ControleSemaforo+0x5c>
+ 8000ad4:	4b13      	ldr	r3, [pc, #76]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000ad6:	681b      	ldr	r3, [r3, #0]
  8000ad8:	68ba      	ldr	r2, [r7, #8]
  8000ada:	63da      	str	r2, [r3, #60]	@ 0x3c
@@ -1219,33 +1220,33 @@ void TrafficLight_Sequence(void)
  8000ae8:	68ba      	ldr	r2, [r7, #8]
  8000aea:	687b      	ldr	r3, [r7, #4]
  8000aec:	429a      	cmp	r2, r3
- 8000aee:	d9e0      	bls.n	8000ab2 <TrafficLight_Sequence+0x32>
+ 8000aee:	d9e0      	bls.n	8000ab2 <ControleSemaforo+0x32>
         }
-        HAL_Delay(300); // pausa curta entre LEDs
+        HAL_Delay(300); // Pausa curta entre os LEDs
  8000af0:	f44f 7096 	mov.w	r0, #300	@ 0x12c
  8000af4:	f000 fd6c 	bl	80015d0 <HAL_Delay>
-    for (int ch = 1; ch <= 3; ch++)
+    for (int channel = 1; channel <= 3; channel++)
  8000af8:	68fb      	ldr	r3, [r7, #12]
  8000afa:	3301      	adds	r3, #1
  8000afc:	60fb      	str	r3, [r7, #12]
  8000afe:	68fb      	ldr	r3, [r7, #12]
  8000b00:	2b03      	cmp	r3, #3
- 8000b02:	ddd3      	ble.n	8000aac <TrafficLight_Sequence+0x2c>
+ 8000b02:	ddd3      	ble.n	8000aac <ControleSemaforo+0x2c>
     }
 
-    // Garante que todos ficam no brilho máximo
+    // Garante que todos esteja ligados com mo brilho máximo
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, maxDuty);
- 8000b04:	4b07      	ldr	r3, [pc, #28]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000b04:	4b07      	ldr	r3, [pc, #28]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000b06:	681b      	ldr	r3, [r3, #0]
  8000b08:	687a      	ldr	r2, [r7, #4]
  8000b0a:	635a      	str	r2, [r3, #52]	@ 0x34
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, maxDuty);
- 8000b0c:	4b05      	ldr	r3, [pc, #20]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000b0c:	4b05      	ldr	r3, [pc, #20]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000b0e:	681b      	ldr	r3, [r3, #0]
  8000b10:	687a      	ldr	r2, [r7, #4]
  8000b12:	639a      	str	r2, [r3, #56]	@ 0x38
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, maxDuty);
- 8000b14:	4b03      	ldr	r3, [pc, #12]	@ (8000b24 <TrafficLight_Sequence+0xa4>)
+ 8000b14:	4b03      	ldr	r3, [pc, #12]	@ (8000b24 <ControleSemaforo+0xa4>)
  8000b16:	681b      	ldr	r3, [r3, #0]
  8000b18:	687a      	ldr	r2, [r7, #4]
  8000b1a:	63da      	str	r2, [r3, #60]	@ 0x3c
@@ -1256,53 +1257,53 @@ void TrafficLight_Sequence(void)
  8000b22:	bd80      	pop	{r7, pc}
  8000b24:	2000012c 	.word	0x2000012c
 
-08000b28 <StartReactionTest>:
+08000b28 <StartTest>:
 
 /* Inicia o teste de reação */
-void StartReactionTest(void)
+void StartTest(void)
 {
  8000b28:	b580      	push	{r7, lr}
  8000b2a:	b082      	sub	sp, #8
  8000b2c:	af00      	add	r7, sp, #0
-    if (ubTestInProgress == 0)
- 8000b2e:	4b1f      	ldr	r3, [pc, #124]	@ (8000bac <StartReactionTest+0x84>)
+    if (TestInProgress == 0)
+ 8000b2e:	4b1f      	ldr	r3, [pc, #124]	@ (8000bac <StartTest+0x84>)
  8000b30:	781b      	ldrb	r3, [r3, #0]
  8000b32:	b2db      	uxtb	r3, r3
  8000b34:	2b00      	cmp	r3, #0
- 8000b36:	d134      	bne.n	8000ba2 <StartReactionTest+0x7a>
+ 8000b36:	d134      	bne.n	8000ba2 <StartTest+0x7a>
     {
-        ubTestInProgress = 1;
- 8000b38:	4b1c      	ldr	r3, [pc, #112]	@ (8000bac <StartReactionTest+0x84>)
+        TestInProgress = 1;
+ 8000b38:	4b1c      	ldr	r3, [pc, #112]	@ (8000bac <StartTest+0x84>)
  8000b3a:	2201      	movs	r2, #1
  8000b3c:	701a      	strb	r2, [r3, #0]
-        Send_UART_Message("Inicio do Teste...\r\n");
- 8000b3e:	481c      	ldr	r0, [pc, #112]	@ (8000bb0 <StartReactionTest+0x88>)
- 8000b40:	f7ff ff88 	bl	8000a54 <Send_UART_Message>
+        SendUART("Inicio do Teste...\r\n");
+ 8000b3e:	481c      	ldr	r0, [pc, #112]	@ (8000bb0 <StartTest+0x88>)
+ 8000b40:	f7ff ff88 	bl	8000a54 <SendUART>
 
         // Reseta LEDs vencedores
         HAL_GPIO_WritePin(GPIOC, LED_PLAYER1_Pin, GPIO_PIN_RESET);
  8000b44:	2200      	movs	r2, #0
  8000b46:	f44f 7100 	mov.w	r1, #512	@ 0x200
- 8000b4a:	481a      	ldr	r0, [pc, #104]	@ (8000bb4 <StartReactionTest+0x8c>)
+ 8000b4a:	481a      	ldr	r0, [pc, #104]	@ (8000bb4 <StartTest+0x8c>)
  8000b4c:	f001 f8b4 	bl	8001cb8 <HAL_GPIO_WritePin>
         HAL_GPIO_WritePin(GPIOC, LED_PLAYER2_Pin, GPIO_PIN_RESET);
  8000b50:	2200      	movs	r2, #0
  8000b52:	2180      	movs	r1, #128	@ 0x80
- 8000b54:	4817      	ldr	r0, [pc, #92]	@ (8000bb4 <StartReactionTest+0x8c>)
+ 8000b54:	4817      	ldr	r0, [pc, #92]	@ (8000bb4 <StartTest+0x8c>)
  8000b56:	f001 f8af 	bl	8001cb8 <HAL_GPIO_WritePin>
 
         // Executa a sequência do semáforo (com PWM)
         HAL_Delay(500);
  8000b5a:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
  8000b5e:	f000 fd37 	bl	80015d0 <HAL_Delay>
-        TrafficLight_Sequence();
- 8000b62:	f7ff ff8d 	bl	8000a80 <TrafficLight_Sequence>
+        ControleSemaforo();
+ 8000b62:	f7ff ff8d 	bl	8000a80 <ControleSemaforo>
 
         // Delay aleatório 1-6s
-        uint32_t random_delay_ticks = (rand() % 50000) + 10000;
+        uint32_t randomDelay = (rand() % 50000) + 10000;
  8000b66:	f004 fccf 	bl	8005508 <rand>
  8000b6a:	4602      	mov	r2, r0
- 8000b6c:	4b12      	ldr	r3, [pc, #72]	@ (8000bb8 <StartReactionTest+0x90>)
+ 8000b6c:	4b12      	ldr	r3, [pc, #72]	@ (8000bb8 <StartTest+0x90>)
  8000b6e:	fb83 1302 	smull	r1, r3, r3, r2
  8000b72:	1319      	asrs	r1, r3, #12
  8000b74:	17d3      	asrs	r3, r2, #31
@@ -1314,18 +1315,18 @@ void StartReactionTest(void)
  8000b86:	3310      	adds	r3, #16
  8000b88:	607b      	str	r3, [r7, #4]
         __HAL_TIM_SET_COUNTER(&htim2, 0);
- 8000b8a:	4b0c      	ldr	r3, [pc, #48]	@ (8000bbc <StartReactionTest+0x94>)
+ 8000b8a:	4b0c      	ldr	r3, [pc, #48]	@ (8000bbc <StartTest+0x94>)
  8000b8c:	681b      	ldr	r3, [r3, #0]
  8000b8e:	2200      	movs	r2, #0
  8000b90:	625a      	str	r2, [r3, #36]	@ 0x24
-        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, random_delay_ticks);
- 8000b92:	4b0a      	ldr	r3, [pc, #40]	@ (8000bbc <StartReactionTest+0x94>)
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, randomDelay);
+ 8000b92:	4b0a      	ldr	r3, [pc, #40]	@ (8000bbc <StartTest+0x94>)
  8000b94:	681b      	ldr	r3, [r3, #0]
  8000b96:	687a      	ldr	r2, [r7, #4]
  8000b98:	635a      	str	r2, [r3, #52]	@ 0x34
         HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
  8000b9a:	2100      	movs	r1, #0
- 8000b9c:	4807      	ldr	r0, [pc, #28]	@ (8000bbc <StartReactionTest+0x94>)
+ 8000b9c:	4807      	ldr	r0, [pc, #28]	@ (8000bbc <StartTest+0x94>)
  8000b9e:	f001 ff35 	bl	8002a0c <HAL_TIM_OC_Start_IT>
     }
 }
@@ -1335,7 +1336,7 @@ void StartReactionTest(void)
  8000ba8:	bd80      	pop	{r7, pc}
  8000baa:	bf00      	nop
  8000bac:	20000094 	.word	0x20000094
- 8000bb0:	08006914 	.word	0x08006914
+ 8000bb0:	08006910 	.word	0x08006910
  8000bb4:	40020800 	.word	0x40020800
  8000bb8:	14f8b589 	.word	0x14f8b589
  8000bbc:	2000009c 	.word	0x2000009c
@@ -2924,7 +2925,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  80014d0:	20020000 	.word	0x20020000
  80014d4:	20000000 	.word	0x20000000
  80014d8:	2000006c 	.word	0x2000006c
- 80014dc:	08006a34 	.word	0x08006a34
+ 80014dc:	08006a30 	.word	0x08006a30
  80014e0:	2000006c 	.word	0x2000006c
  80014e4:	2000030c 	.word	0x2000030c
 
@@ -4059,7 +4060,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  8001ea2:	bf00      	nop
  8001ea4:	40023c00 	.word	0x40023c00
  8001ea8:	40023800 	.word	0x40023800
- 8001eac:	0800692c 	.word	0x0800692c
+ 8001eac:	08006928 	.word	0x08006928
  8001eb0:	20000004 	.word	0x20000004
  8001eb4:	20000008 	.word	0x20000008
 
@@ -4090,7 +4091,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  8001eec:	4618      	mov	r0, r3
  8001eee:	bd80      	pop	{r7, pc}
  8001ef0:	40023800 	.word	0x40023800
- 8001ef4:	0800693c 	.word	0x0800693c
+ 8001ef4:	08006938 	.word	0x08006938
 
 08001ef8 <HAL_RCC_GetPCLK2Freq>:
  8001ef8:	b580      	push	{r7, lr}
@@ -4107,7 +4108,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  8001f14:	4618      	mov	r0, r3
  8001f16:	bd80      	pop	{r7, pc}
  8001f18:	40023800 	.word	0x40023800
- 8001f1c:	0800693c 	.word	0x0800693c
+ 8001f1c:	08006938 	.word	0x08006938
 
 08001f20 <HAL_RCC_GetSysClockFreq>:
  8001f20:	e92d 4fb0 	stmdb	sp!, {r4, r5, r7, r8, r9, sl, fp, lr}
@@ -10003,8 +10004,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  800555e:	f020 4000 	bic.w	r0, r0, #2147483648	@ 0x80000000
  8005562:	bd10      	pop	{r4, pc}
  8005564:	2000001c 	.word	0x2000001c
- 8005568:	08006944 	.word	0x08006944
- 800556c:	0800695b 	.word	0x0800695b
+ 8005568:	08006940 	.word	0x08006940
+ 800556c:	08006957 	.word	0x08006957
  8005570:	abcd330e 	.word	0xabcd330e
  8005574:	e66d1234 	.word	0xe66d1234
  8005578:	0005deec 	.word	0x0005deec
@@ -10376,10 +10377,10 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  80058ae:	4798      	blx	r3
  80058b0:	3601      	adds	r6, #1
  80058b2:	e7f2      	b.n	800589a <__libc_init_array+0x1e>
- 80058b4:	08006a2c 	.word	0x08006a2c
- 80058b8:	08006a2c 	.word	0x08006a2c
- 80058bc:	08006a2c 	.word	0x08006a2c
- 80058c0:	08006a30 	.word	0x08006a30
+ 80058b4:	08006a28 	.word	0x08006a28
+ 80058b8:	08006a28 	.word	0x08006a28
+ 80058bc:	08006a28 	.word	0x08006a28
+ 80058c0:	08006a2c 	.word	0x08006a2c
 
 080058c4 <__retarget_lock_init_recursive>:
  80058c4:	4770      	bx	lr
@@ -10412,9 +10413,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  80058f4:	e7f3      	b.n	80058de <__assert_func+0x12>
  80058f6:	bf00      	nop
  80058f8:	2000001c 	.word	0x2000001c
- 80058fc:	080069b3 	.word	0x080069b3
- 8005900:	080069c0 	.word	0x080069c0
- 8005904:	080069ee 	.word	0x080069ee
+ 80058fc:	080069af 	.word	0x080069af
+ 8005900:	080069bc 	.word	0x080069bc
+ 8005904:	080069ea 	.word	0x080069ea
 
 08005908 <_free_r>:
  8005908:	b538      	push	{r3, r4, r5, lr}
@@ -10922,11 +10923,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  8005d9c:	4638      	mov	r0, r7
  8005d9e:	f000 f879 	bl	8005e94 <_printf_i>
  8005da2:	e7ed      	b.n	8005d80 <_svfiprintf_r+0x1c0>
- 8005da4:	080069ef 	.word	0x080069ef
- 8005da8:	080069f9 	.word	0x080069f9
+ 8005da4:	080069eb 	.word	0x080069eb
+ 8005da8:	080069f5 	.word	0x080069f5
  8005dac:	00000000 	.word	0x00000000
  8005db0:	08005b09 	.word	0x08005b09
- 8005db4:	080069f5 	.word	0x080069f5
+ 8005db4:	080069f1 	.word	0x080069f1
 
 08005db8 <_printf_common>:
  8005db8:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -11255,8 +11256,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  80060c0:	2500      	movs	r5, #0
  80060c2:	f104 0619 	add.w	r6, r4, #25
  80060c6:	e7f5      	b.n	80060b4 <_printf_i+0x220>
- 80060c8:	08006a00 	.word	0x08006a00
- 80060cc:	08006a11 	.word	0x08006a11
+ 80060c8:	080069fc 	.word	0x080069fc
+ 80060cc:	08006a0d 	.word	0x08006a0d
 
 080060d0 <__sflush_r>:
  80060d0:	f9b1 200c 	ldrsh.w	r2, [r1, #12]
@@ -11791,11 +11792,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  800658c:	4630      	mov	r0, r6
  800658e:	f7ff fc81 	bl	8005e94 <_printf_i>
  8006592:	e7e4      	b.n	800655e <_vfiprintf_r+0x1e6>
- 8006594:	080069ef 	.word	0x080069ef
- 8006598:	080069f9 	.word	0x080069f9
+ 8006594:	080069eb 	.word	0x080069eb
+ 8006598:	080069f5 	.word	0x080069f5
  800659c:	00000000 	.word	0x00000000
  80065a0:	08006355 	.word	0x08006355
- 80065a4:	080069f5 	.word	0x080069f5
+ 80065a4:	080069f1 	.word	0x080069f1
 
 080065a8 <__swbuf_r>:
  80065a8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
